@@ -201,7 +201,7 @@ def distance(s1, s2,
 
     Uses dynamic programming to compute:
 
-    wps[i, j] = (s1[i]-s2[j])**2 + min(
+    wps[i, j] = abs(s1[i]-s2[j]) + min(
                     wps[i-1, j  ] + penalty,  // vertical   / insertion / expansion
                     wps[i  , j-1] + penalty,  // horizontal / deletion  / compression
                     wps[i-1, j-1])            // diagonal   / match
@@ -291,7 +291,7 @@ def distance(s1, s2,
         if psi_1b != 0 and j_start == 0 and i < psi_1b:
             dtw[i1 * length] = 0
         for j in range(j_start, j_end):
-            d = (s1[i] - s2[j])**2
+            d = abs(s1[i] - s2[j])
             if d > max_step:
                 continue
             assert j + 1 - skip >= 0
@@ -327,7 +327,7 @@ def distance(s1, s2,
             d = min(dtw[i1 * length + min(c, c + window - 1) - skip], psi_shortest)
     if max_dist and d > max_dist:
         d = inf
-    d = math.sqrt(d)
+    d = d  # math.sqrt(d)
     return d
 
 
